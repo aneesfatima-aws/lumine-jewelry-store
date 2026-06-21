@@ -148,9 +148,7 @@ Website homepage + CloudFront URL output
 <img width="1366" height="670" alt="1" src="https://github.com/user-attachments/assets/df67880c-0ef7-44f8-8702-2ddf1fb1a730" />
 
 GitHub Actions success pipeline
-
-
-
+<img width="977" height="225" alt="2" src="https://github.com/user-attachments/assets/1c4bc7cd-08e2-48ef-aa0b-d6d1a71e00b4" />
 
 
 ---
