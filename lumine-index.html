@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumine — Pearl & Stone Atelier</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07100F;--surface:#0D1A18;--surface2:#112220;
+  --pearl:#F2EDE4;--gold:#D4AF6A;--teal:#4ECDC4;
+  --rose:#C9847A;--platinum:#C8D8D6;--accent:#A8E6CE;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--pearl);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(7,16,15,0.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(78,205,196,0.08);transition:background .4s}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Cormorant SC',serif;font-size:.75rem;letter-spacing:.2em;color:var(--platinum);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cart-btn{font-family:'Cormorant SC',serif;font-size:.75rem;letter-spacing:.15em;color:var(--pearl);cursor:pointer;border:1px solid rgba(212,175,106,.4);padding:.5rem 1.2rem;transition:all .3s;position:relative;background:none}
+.nav-cart-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cart-badge{position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--teal);color:var(--bg);font-family:'Jost',sans-serif;font-size:.6rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0);transition:all .3s}
+.cart-badge.show{opacity:1;transform:scale(1)}
+
+/* HERO */
+#hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,#0d2820 0%,var(--bg) 70%)}
+.pearl-orb{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffffff 0%,#f0e8d8 15%,#d4c4a8 35%,#b8a890 55%,#8a7a68 75%,#3a3028 100%);box-shadow:0 0 80px 20px rgba(78,205,196,.15),0 0 160px 60px rgba(78,205,196,.07),inset -20px -20px 40px rgba(0,0,0,.4),inset 10px 10px 30px rgba(255,255,255,.15);animation:pearlBreathe 6s ease-in-out infinite,pearlFloat 8s ease-in-out infinite;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0}
+.pearl-orb::before{content:'';position:absolute;top:12%;left:18%;width:35%;height:22%;background:radial-gradient(ellipse,rgba(255,255,255,.6) 0%,transparent 70%);border-radius:50%;transform:rotate(-20deg);filter:blur(4px)}
+.pearl-orb::after{content:'';position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0%,rgba(78,205,196,.3) 20%,transparent 40%,rgba(168,230,206,.2) 60%,transparent 80%,rgba(212,175,106,.2) 100%);animation:orbRing 12s linear infinite;filter:blur(8px)}
+@keyframes pearlBreathe{0%,100%{box-shadow:0 0 80px 20px rgba(78,205,196,.15),0 0 160px 60px rgba(78,205,196,.07),inset -20px -20px 40px rgba(0,0,0,.4),inset 10px 10px 30px rgba(255,255,255,.15)}50%{box-shadow:0 0 120px 40px rgba(78,205,196,.25),0 0 240px 100px rgba(78,205,196,.1),inset -20px -20px 40px rgba(0,0,0,.4),inset 10px 10px 30px rgba(255,255,255,.2)}}
+@keyframes pearlFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
+@keyframes orbRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:particleDrift var(--dur) ease-in-out infinite var(--delay)}
+@keyframes particleDrift{0%{opacity:0;transform:translateY(0) scale(0)}20%{opacity:.6;transform:translateY(-30px) scale(1)}80%{opacity:.3;transform:translateY(-120px) scale(.6)}100%{opacity:0;transform:translateY(-180px) scale(0)}}
+.hero-content{position:relative;z-index:2;text-align:center;margin-top:210px}
+.hero-eyebrow{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.5em;color:var(--teal);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s .5s forwards}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,8rem);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--pearl);opacity:0;animation:fadeUp 1s .8s forwards}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-family:'Jost',sans-serif;font-weight:200;font-size:.9rem;letter-spacing:.2em;color:var(--platinum);margin-top:1.5rem;opacity:0;animation:fadeUp 1s 1.1s forwards}
+.hero-cta{margin-top:2.5rem;display:inline-block;font-family:'Cormorant SC',serif;font-size:.8rem;letter-spacing:.3em;color:var(--bg);background:linear-gradient(135deg,var(--teal),var(--accent),var(--teal));background-size:200%;padding:1rem 3rem;text-decoration:none;transition:background-position .5s,transform .3s;opacity:0;animation:fadeUp 1s 1.4s forwards}
+.hero-cta:hover{background-position:right;transform:translateY(-2px)}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-family:'Cormorant SC',serif;font-size:.6rem;letter-spacing:.3em;color:rgba(242,237,228,.4);animation:scrollHint 2s ease-in-out infinite}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,rgba(78,205,196,.6),transparent)}
+@keyframes scrollHint{0%,100%{opacity:.4;transform:translateX(-50%) translateY(0)}50%{opacity:.8;transform:translateX(-50%) translateY(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+section{padding:7rem 4rem}
+.section-label{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.5em;color:var(--teal);margin-bottom:1rem;display:block}
+.section-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.1;color:var(--pearl);margin-bottom:1.5rem}
+.section-title em{font-style:italic;color:var(--rose)}
+.divider{width:60px;height:1px;background:linear-gradient(to right,var(--gold),transparent);margin-bottom:2rem}
+
+/* MARQUEE */
+#stones-marquee{padding:2.5rem 0;background:var(--surface);border-top:1px solid rgba(78,205,196,.1);border-bottom:1px solid rgba(78,205,196,.1);overflow:hidden}
+.marquee-track{display:flex;gap:4rem;animation:marqueeScroll 30s linear infinite;width:max-content}
+.marquee-item{display:flex;align-items:center;gap:1rem;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:rgba(242,237,228,.35);white-space:nowrap;flex-shrink:0}
+.marquee-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);opacity:.5}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* COLLECTIONS */
+#collections{background:var(--surface)}
+.collections-intro{max-width:520px;margin-bottom:4rem}
+.collections-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.collection-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:3/4;background:var(--bg)}
+.card-bg{position:absolute;inset:0;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.collection-card:nth-child(1) .card-bg{background:radial-gradient(ellipse at 40% 30%,#122018 0%,#07100f 100%)}
+.collection-card:nth-child(2) .card-bg{background:radial-gradient(ellipse at 60% 40%,#0d1530 0%,#07100f 100%)}
+.collection-card:nth-child(3) .card-bg{background:radial-gradient(ellipse at 50% 30%,#200a10 0%,#07100f 100%)}
+.gem-display{position:absolute;top:50%;left:50%;transform:translate(-50%,-65%);transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.collection-card:hover .card-bg{transform:scale(1.05)}
+.collection-card:hover .gem-display{transform:translate(-50%,-70%) scale(1.1)}
+.shimmer-overlay{position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.04) 50%,transparent 60%);background-size:200% 200%;opacity:0;transition:opacity .4s}
+.collection-card:hover .shimmer-overlay{opacity:1;animation:shimmerSweep 1s ease forwards}
+@keyframes shimmerSweep{from{background-position:200% 200%}to{background-position:-200% -200%}}
+.card-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem}
+.card-label{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.4em;color:var(--teal);margin-bottom:.4rem;z-index:2;position:relative}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--pearl);position:relative;z-index:2}
+.card-desc{font-size:.78rem;color:rgba(242,237,228,.5);margin-top:.5rem;line-height:1.6;position:relative;z-index:2;max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .4s;opacity:0}
+.collection-card:hover .card-desc{max-height:80px;opacity:1}
+
+/* MATERIALS */
+#materials{background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.materials-visual{position:relative;height:500px;display:flex;align-items:center;justify-content:center}
+.metal-ring{position:absolute;border-radius:50%;border-style:solid;border-color:transparent;animation:ringRotate var(--spd) linear infinite var(--dir,normal)}
+.ring-1{width:300px;height:300px;border-width:1px;border-top-color:rgba(212,175,106,.6);border-right-color:rgba(212,175,106,.2);--spd:20s}
+.ring-2{width:220px;height:220px;border-width:1px;border-bottom-color:rgba(78,205,196,.5);border-left-color:rgba(78,205,196,.2);--spd:14s;--dir:reverse}
+.ring-3{width:380px;height:380px;border-width:1px;border-top-color:rgba(200,216,214,.3);border-left-color:rgba(200,216,214,.1);--spd:28s}
+@keyframes ringRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.center-gem{position:relative;z-index:2;animation:gemPulse 4s ease-in-out infinite}
+@keyframes gemPulse{0%,100%{filter:drop-shadow(0 0 15px rgba(78,205,196,.5))}50%{filter:drop-shadow(0 0 35px rgba(78,205,196,.9))}}
+.metal-tags{position:absolute}
+.metal-tag{position:absolute;font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.3em;padding:.4rem .8rem;border:1px solid;white-space:nowrap}
+.tag-gold{color:var(--gold);border-color:rgba(212,175,106,.3);top:60px;left:-80px}
+.tag-silver{color:var(--platinum);border-color:rgba(200,216,214,.3);bottom:80px;left:-60px}
+.tag-platinum{color:#e8e8f0;border-color:rgba(200,200,220,.3);top:80px;right:-80px}
+.tag-rose{color:var(--rose);border-color:rgba(201,132,122,.3);bottom:60px;right:-60px}
+.materials-body{font-size:.9rem;line-height:1.9;color:rgba(242,237,228,.6);margin-bottom:2rem}
+.material-list{list-style:none}
+.material-list li{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--pearl)}
+.material-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.mat-note{font-family:'Jost',sans-serif;font-size:.7rem;color:rgba(242,237,228,.4);margin-left:auto;letter-spacing:.1em}
+
+/* PRODUCTS */
+#bestsellers{background:var(--surface2)}
+.bs-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
+.view-all{font-family:'Cormorant SC',serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,175,106,.3);padding-bottom:2px;transition:border-color .3s}
+.view-all:hover{border-color:var(--gold)}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+
+.product-card{background:var(--surface);cursor:pointer;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;position:relative;border:1px solid rgba(78,205,196,.04)}
+.product-card:hover{transform:translateY(-10px);box-shadow:0 24px 60px rgba(0,0,0,.6)}
+
+/* THE KEY FIX: product-img must have a fixed height and show its children */
+.product-img{
+  height:200px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.product-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
+.product-card:hover .product-glow{opacity:1}
+.gem-ring-outer{position:absolute;width:160px;height:160px;border-radius:50%;border:1px solid rgba(78,205,196,.12);animation:ringRotate 16s linear infinite;pointer-events:none}
+.gem-ring-inner{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(212,175,106,.1);animation:ringRotate 10s linear infinite reverse;pointer-events:none}
+.product-gem-wrap{position:relative;z-index:2;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.product-card:hover .product-gem-wrap{transform:scale(1.12) rotate(5deg)}
+
+.product-badge{position:absolute;top:10px;left:10px;z-index:3;font-family:'Cormorant SC',serif;font-size:.55rem;letter-spacing:.2em;padding:.25rem .6rem;background:rgba(78,205,196,.15);border:1px solid rgba(78,205,196,.35);color:var(--teal)}
+.product-info{padding:1.2rem}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--pearl);margin-bottom:.3rem}
+.product-metal-tag{font-family:'Cormorant SC',serif;font-size:.58rem;letter-spacing:.25em;color:rgba(242,237,228,.4)}
+.product-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.9rem}
+.product-price{font-family:'Jost',sans-serif;font-size:.85rem;font-weight:300;color:var(--gold)}
+.add-btn{font-family:'Cormorant SC',serif;font-size:.58rem;letter-spacing:.2em;background:none;border:1px solid rgba(78,205,196,.35);color:var(--teal);padding:.35rem .75rem;cursor:pointer;transition:all .3s}
+.add-btn:hover{background:var(--teal);color:var(--bg);border-color:var(--teal)}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;background:rgba(7,16,15,.75);z-index:300;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(4px)}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:420px;z-index:301;background:var(--surface);border-left:1px solid rgba(78,205,196,.12);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--pearl)}
+.cart-close{background:none;border:none;color:var(--platinum);font-size:1.4rem;cursor:pointer;transition:color .3s;line-height:1}
+.cart-close:hover{color:var(--teal)}
+.cart-items{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.cart-items::-webkit-scrollbar{width:3px}
+.cart-items::-webkit-scrollbar-thumb{background:rgba(78,205,196,.3)}
+.cart-empty{text-align:center;padding:4rem 2rem}
+.cart-empty-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.3}
+.cart-empty p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(242,237,228,.4);line-height:1.8}
+.cart-item{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.cart-item-gem{width:60px;height:60px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--pearl);margin-bottom:.2rem}
+.cart-item-sub{font-family:'Cormorant SC',serif;font-size:.55rem;letter-spacing:.22em;color:rgba(242,237,228,.4)}
+.cart-item-price{font-size:.85rem;color:var(--gold);margin-top:.4rem}
+.cart-item-remove{background:none;border:none;color:rgba(242,237,228,.3);cursor:pointer;font-size:1rem;align-self:flex-start;transition:color .3s;padding:0;margin-left:auto}
+.cart-item-remove:hover{color:var(--rose)}
+.cart-footer{padding:2rem;border-top:1px solid rgba(255,255,255,.06)}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.cart-total-label{font-family:'Cormorant SC',serif;font-size:.7rem;letter-spacing:.3em;color:rgba(242,237,228,.5)}
+.cart-total-val{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold)}
+.checkout-btn{width:100%;padding:1.1rem;background:linear-gradient(135deg,var(--teal),var(--accent));border:none;color:var(--bg);font-family:'Cormorant SC',serif;font-size:.8rem;letter-spacing:.3em;cursor:pointer;transition:opacity .3s}
+.checkout-btn:hover{opacity:.88}
+
+/* POPUP */
+.popup-overlay{position:fixed;inset:0;background:rgba(7,16,15,.88);z-index:400;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:2rem}
+.popup-overlay.open{opacity:1;pointer-events:all}
+.popup-modal{background:var(--surface);max-width:820px;width:100%;display:grid;grid-template-columns:1fr 1fr;max-height:90vh;overflow:hidden;transform:scale(.9) translateY(24px);transition:transform .45s cubic-bezier(.16,1,.3,1);position:relative}
+.popup-overlay.open .popup-modal{transform:scale(1) translateY(0)}
+.popup-gem-panel{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:400px}
+.popup-gem-bg{position:absolute;inset:0}
+.popup-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.popup-ring{position:absolute;border-radius:50%;border:1px solid;animation:ringRotate var(--spd) linear infinite var(--dir,normal)}
+.popup-ring-1{width:220px;height:220px;border-color:rgba(78,205,196,.18);--spd:16s}
+.popup-ring-2{width:290px;height:290px;border-color:rgba(212,175,106,.1);--spd:24s;--dir:reverse}
+.popup-gem-wrap{position:relative;z-index:2;animation:pearlFloat 6s ease-in-out infinite}
+.popup-info{padding:2.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:.9rem}
+.popup-info::-webkit-scrollbar{width:3px}
+.popup-info::-webkit-scrollbar-thumb{background:rgba(78,205,196,.3)}
+.popup-close{position:absolute;top:1rem;right:1rem;background:rgba(7,16,15,.7);border:1px solid rgba(255,255,255,.1);color:var(--platinum);width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;z-index:10;transition:all .3s}
+.popup-close:hover{border-color:var(--teal);color:var(--teal)}
+.popup-badge{font-family:'Cormorant SC',serif;font-size:.6rem;letter-spacing:.35em;color:var(--teal)}
+.popup-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--pearl);line-height:1.1}
+.popup-metal{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.3em;color:rgba(242,237,228,.45)}
+.popup-price{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold)}
+.popup-desc{font-size:.85rem;color:rgba(242,237,228,.55);line-height:1.85}
+.popup-specs{list-style:none;border-top:1px solid rgba(255,255,255,.05)}
+.popup-specs li{display:flex;justify-content:space-between;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.78rem}
+.popup-specs li span:first-child{color:rgba(242,237,228,.4);font-family:'Cormorant SC',serif;letter-spacing:.15em;font-size:.62rem}
+.popup-specs li span:last-child{color:var(--pearl)}
+.popup-add-btn{width:100%;padding:1rem;background:var(--teal);border:none;color:var(--bg);font-family:'Cormorant SC',serif;font-size:.8rem;letter-spacing:.3em;cursor:pointer;transition:background .3s;margin-top:.5rem}
+.popup-add-btn:hover{background:var(--accent)}
+
+/* NEWSLETTER */
+#newsletter{background:var(--surface);text-align:center;padding:7rem 4rem;position:relative;overflow:hidden}
+.nl-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(78,205,196,.05) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.nl-sub{font-size:.85rem;color:rgba(242,237,228,.5);margin-bottom:2.5rem;position:relative}
+.nl-form{display:flex;max-width:420px;margin:0 auto;position:relative}
+.nl-input{flex:1;background:transparent;border:1px solid rgba(78,205,196,.25);border-right:none;padding:1rem 1.2rem;color:var(--pearl);font-family:'Jost',sans-serif;font-size:.8rem;outline:none;transition:border-color .3s}
+.nl-input::placeholder{color:rgba(242,237,228,.3)}
+.nl-input:focus{border-color:rgba(78,205,196,.6)}
+.nl-btn{background:var(--teal);border:none;padding:1rem 1.5rem;font-family:'Cormorant SC',serif;font-size:.7rem;letter-spacing:.25em;color:var(--bg);cursor:pointer;transition:background .3s}
+.nl-btn:hover{background:var(--accent)}
+
+/* FOOTER */
+footer{background:#050c0b;padding:4rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;border-top:1px solid rgba(78,205,196,.08)}
+.footer-brand .nav-logo{display:block;margin-bottom:1rem;font-size:1.4rem}
+.footer-tagline{font-size:.78rem;color:rgba(242,237,228,.35);line-height:1.7;max-width:220px}
+.footer-col h4{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.4em;color:var(--teal);margin-bottom:1.2rem}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:.7rem}
+.footer-col ul li a{font-size:.8rem;color:rgba(242,237,228,.4);text-decoration:none;transition:color .3s}
+.footer-col ul li a:hover{color:var(--pearl)}
+.footer-bottom{background:#050c0b;padding:1.5rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.04)}
+.footer-copy{font-size:.7rem;color:rgba(242,237,228,.2);letter-spacing:.1em}
+.footer-socials{display:flex;gap:1.5rem}
+.footer-socials a{font-family:'Cormorant SC',serif;font-size:.65rem;letter-spacing:.2em;color:rgba(242,237,228,.3);text-decoration:none;transition:color .3s}
+.footer-socials a:hover{color:var(--teal)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);border:1px solid rgba(78,205,196,.35);padding:.9rem 2rem;font-family:'Cormorant SC',serif;font-size:.75rem;letter-spacing:.2em;color:var(--teal);z-index:500;transition:transform .4s cubic-bezier(.16,1,.3,1);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem}
+  .nav-links{display:none}
+  section{padding:5rem 2rem}
+  .collections-grid{grid-template-columns:1fr;gap:1px}
+  .collection-card{aspect-ratio:16/9}
+  #materials{grid-template-columns:1fr;gap:3rem}
+  .materials-visual{height:300px}
+  .tag-gold,.tag-silver,.tag-platinum,.tag-rose{display:none}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  footer{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-bottom{flex-direction:column;gap:1rem}
+  .popup-modal{grid-template-columns:1fr}
+  .popup-gem-panel{min-height:220px}
+  .cart-drawer{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- INLINE SVG DEFS — all gradients defined once, globally, with unique IDs -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <!-- Pearl -->
+    <radialGradient id="gPearl" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#f5eedd"/>
+      <stop offset="55%" stop-color="#d8c4a0"/>
+      <stop offset="80%" stop-color="#a89070"/>
+      <stop offset="100%" stop-color="#5a4a38"/>
+    </radialGradient>
+    <!-- Sapphire -->
+    <linearGradient id="gSapphire" x1="15%" y1="8%" x2="85%" y2="92%">
+      <stop offset="0%" stop-color="#c0d8ff"/>
+      <stop offset="30%" stop-color="#4488ee"/>
+      <stop offset="65%" stop-color="#1144cc"/>
+      <stop offset="100%" stop-color="#060e44"/>
+    </linearGradient>
+    <!-- Ruby -->
+    <linearGradient id="gRuby" x1="15%" y1="8%" x2="85%" y2="92%">
+      <stop offset="0%" stop-color="#ffb0c0"/>
+      <stop offset="30%" stop-color="#ee2244"/>
+      <stop offset="65%" stop-color="#aa0022"/>
+      <stop offset="100%" stop-color="#3a0010"/>
+    </linearGradient>
+    <!-- Emerald -->
+    <linearGradient id="gEmerald" x1="15%" y1="8%" x2="85%" y2="92%">
+      <stop offset="0%" stop-color="#a0ffcc"/>
+      <stop offset="30%" stop-color="#22bb66"/>
+      <stop offset="65%" stop-color="#0a8840"/>
+      <stop offset="100%" stop-color="#023018"/>
+    </linearGradient>
+    <!-- Tanzanite -->
+    <linearGradient id="gTanzanite" x1="10%" y1="5%" x2="90%" y2="95%">
+      <stop offset="0%" stop-color="#e0b8ff"/>
+      <stop offset="28%" stop-color="#8844dd"/>
+      <stop offset="65%" stop-color="#4422aa"/>
+      <stop offset="100%" stop-color="#100630"/>
+    </linearGradient>
+    <!-- Alexandrite -->
+    <radialGradient id="gAlexGreen" cx="38%" cy="34%" r="60%">
+      <stop offset="0%" stop-color="#aaffdd"/>
+      <stop offset="40%" stop-color="#22cc88"/>
+      <stop offset="75%" stop-color="#0a8858"/>
+      <stop offset="100%" stop-color="#032818"/>
+    </radialGradient>
+    <radialGradient id="gAlexRed" cx="62%" cy="66%" r="55%">
+      <stop offset="0%" stop-color="#ffaacc"/>
+      <stop offset="40%" stop-color="#dd2266"/>
+      <stop offset="100%" stop-color="#440018"/>
+    </radialGradient>
+    <!-- Opal -->
+    <radialGradient id="gOpal" cx="44%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#fffae8"/>
+      <stop offset="18%" stop-color="#ffe8b0"/>
+      <stop offset="36%" stop-color="#ff8833"/>
+      <stop offset="55%" stop-color="#33ddcc"/>
+      <stop offset="74%" stop-color="#9933ee"/>
+      <stop offset="100%" stop-color="#110822"/>
+    </radialGradient>
+    <!-- Paraiba -->
+    <radialGradient id="gParaiba" cx="38%" cy="32%" r="62%">
+      <stop offset="0%" stop-color="#bbfffa"/>
+      <stop offset="28%" stop-color="#00eeee"/>
+      <stop offset="60%" stop-color="#009999"/>
+      <stop offset="100%" stop-color="#002222"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#">Lumine</a>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#materials">Craft</a></li>
+    <li><a href="#bestsellers">Jewels</a></li>
+    <li><a href="#newsletter">Atelier</a></li>
+  </ul>
+  <button class="nav-cart-btn" id="cartToggle">
+    Bag <span class="cart-badge" id="cartBadge">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="pearl-orb"></div>
+  <div class="particles" id="particles"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. 2024 · Pearl & Stone Atelier</p>
+    <h1 class="hero-title">Where Pearls<br><em>meet</em> Stone</h1>
+    <p class="hero-sub">Handcrafted in Gold, Silver & Platinum</p>
+    <a href="#collections" class="hero-cta">Explore Collections</a>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div id="stones-marquee">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- COLLECTIONS -->
+<section id="collections">
+  <div class="collections-intro reveal">
+    <span class="section-label">Our Collections</span>
+    <h2 class="section-title">Stones that<br><em>tell stories</em></h2>
+    <div class="divider"></div>
+    <p style="font-size:.85rem;color:rgba(242,237,228,.5);line-height:1.8">Each piece is an heirloom in the making — ethically sourced gems, set in the finest metals, shaped by artisans who treat craft as devotion.</p>
+  </div>
+  <div class="collections-grid">
+    <div class="collection-card reveal">
+      <div class="card-bg"></div><div class="shimmer-overlay"></div>
+      <div class="gem-display">
+        <svg width="130" height="130" viewBox="0 0 130 130" style="filter:drop-shadow(0 0 22px rgba(242,237,228,.5))">
+          <circle cx="65" cy="65" r="52" fill="url(#gPearl)"/>
+          <ellipse cx="46" cy="43" rx="16" ry="9" fill="rgba(255,255,255,.45)" transform="rotate(-22,46,43)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <p class="card-label">Collection I</p>
+        <h3 class="card-title">Pearl Lumière</h3>
+        <p class="card-desc">South Sea & Akoya pearls in 18k gold settings. The purest light, worn.</p>
+      </div>
+    </div>
+    <div class="collection-card reveal">
+      <div class="card-bg"></div><div class="shimmer-overlay"></div>
+      <div class="gem-display">
+        <svg width="130" height="130" viewBox="0 0 130 130" style="filter:drop-shadow(0 0 28px rgba(68,136,238,.7))">
+          <polygon points="65,12 112,46 112,84 65,118 18,84 18,46" fill="url(#gSapphire)"/>
+          <polygon points="65,12 112,46 65,56" fill="rgba(192,216,255,.55)"/>
+          <polygon points="65,12 18,46 65,56" fill="rgba(255,255,255,.22)"/>
+          <line x1="65" y1="12" x2="65" y2="118" stroke="rgba(255,255,255,.08)" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <p class="card-label">Collection II</p>
+        <h3 class="card-title">Stone Celeste</h3>
+        <p class="card-desc">Sapphires, emeralds & rubies set in platinum and white gold bezels.</p>
+      </div>
+    </div>
+    <div class="collection-card reveal">
+      <div class="card-bg"></div><div class="shimmer-overlay"></div>
+      <div class="gem-display">
+        <svg width="130" height="130" viewBox="0 0 130 130" style="filter:drop-shadow(0 0 28px rgba(200,180,230,.7))">
+          <polygon points="65,10 116,48 96,118 34,118 14,48" fill="url(#gTanzanite)"/>
+          <polygon points="65,10 116,48 65,54" fill="rgba(224,184,255,.55)"/>
+          <polygon points="65,10 14,48 65,54" fill="rgba(255,255,255,.2)"/>
+          <polygon points="65,54 116,48 96,118 65,84" fill="rgba(12,4,32,.3)"/>
+          <polygon points="65,54 14,48 34,118 65,84" fill="rgba(255,255,255,.08)"/>
+        </svg>
+      </div>
+      <div class="card-inner">
+        <p class="card-label">Collection III</p>
+        <h3 class="card-title">Diamond Eclat</h3>
+        <p class="card-desc">Tanzanite & diamonds in rose gold pavé and channel settings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section id="materials">
+  <div class="materials-visual reveal">
+    <div class="ring-3 metal-ring"></div>
+    <div class="ring-1 metal-ring"></div>
+    <div class="ring-2 metal-ring"></div>
+    <div class="metal-tags">
+      <span class="metal-tag tag-gold">24k Gold</span>
+      <span class="metal-tag tag-silver">Sterling Silver</span>
+      <span class="metal-tag tag-platinum">Platinum 950</span>
+      <span class="metal-tag tag-rose">Rose Gold 18k</span>
+    </div>
+    <div class="center-gem">
+      <svg width="80" height="80" viewBox="0 0 80 80">
+        <polygon points="40,5 72,25 72,55 40,75 8,55 8,25" fill="url(#gParaiba)"/>
+        <polygon points="40,5 72,25 40,34" fill="rgba(187,255,250,.5)"/>
+      </svg>
+    </div>
+  </div>
+  <div class="materials-text reveal">
+    <span class="section-label">The Craft</span>
+    <h2 class="section-title">Noble metals,<br><em>timeless</em> form</h2>
+    <div class="divider"></div>
+    <p class="materials-body">Every Lumine piece begins with the metal — hand-selected for purity, poured and worked by artisans who have spent decades mastering their craft. Our stones are set with micron-precise tools, ensuring each gem catches light exactly as nature intended.</p>
+    <ul class="material-list">
+      <li>24k & 18k Yellow Gold <span class="mat-note">Ethically Sourced</span></li>
+      <li>Platinum 950 <span class="mat-note">Hypoallergenic</span></li>
+      <li>18k Rose Gold <span class="mat-note">Italian Refined</span></li>
+      <li>Sterling Silver 925 <span class="mat-note">Rhodium Finished</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section id="bestsellers">
+  <div class="bs-header reveal">
+    <div>
+      <span class="section-label">Most Loved</span>
+      <h2 class="section-title">Bestselling <em>Jewels</em></h2>
+    </div>
+    <a href="#" class="view-all">View All Pieces</a>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="nl-orb"></div>
+  <span class="section-label reveal">The Inner Circle</span>
+  <h2 class="section-title reveal">First to know.<br><em>First to own.</em></h2>
+  <p class="nl-sub reveal">New collections, private previews, and stories from our atelier — delivered quietly to your inbox.</p>
+  <div class="nl-form reveal">
+    <input class="nl-input" type="email" placeholder="your@email.com">
+    <button class="nl-btn">Join</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a class="nav-logo" href="#">Lumine</a>
+    <p class="footer-tagline">Pearl & Stone Atelier. Every jewel carries the weight of craft and the lightness of wonder.</p>
+  </div>
+  <div class="footer-col"><h4>Shop</h4><ul><li><a href="#">Pearl Lumière</a></li><li><a href="#">Stone Celeste</a></li><li><a href="#">Diamond Eclat</a></li><li><a href="#">New Arrivals</a></li><li><a href="#">Gift Sets</a></li></ul></div>
+  <div class="footer-col"><h4>Atelier</h4><ul><li><a href="#">Our Craft</a></li><li><a href="#">Sourcing</a></li><li><a href="#">Bespoke Orders</a></li><li><a href="#">Certification</a></li></ul></div>
+  <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Sizing Guide</a></li><li><a href="#">Care & Cleaning</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+</footer>
+<div class="footer-bottom">
+  <p class="footer-copy">© 2024 Lumine Atelier. All rights reserved.</p>
+  <div class="footer-socials"><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">WhatsApp</a></div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2 class="cart-title">Your Bag</h2>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsEl"></div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-val" id="cartTotal">$0</span>
+    </div>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-modal">
+    <div class="popup-gem-panel" id="popupGemPanel">
+      <div class="popup-gem-bg" id="popupGemBg"></div>
+      <div class="popup-rings">
+        <div class="popup-ring popup-ring-1"></div>
+        <div class="popup-ring popup-ring-2"></div>
+      </div>
+      <div class="popup-gem-wrap" id="popupGemWrap"></div>
+    </div>
+    <div class="popup-info" id="popupInfo"></div>
+    <button class="popup-close" id="popupClose">✕</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── GEM ARTWORK — using global SVG gradient IDs, no inline defs ──
+const GEMS = {
+  pearl: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 24px rgba(242,237,228,.65))"><circle cx="60" cy="60" r="50" fill="url(#gPearl)"/><ellipse cx="42" cy="38" rx="16" ry="9" fill="rgba(255,255,255,.5)" transform="rotate(-22,42,38)"/><ellipse cx="74" cy="76" rx="10" ry="6" fill="rgba(255,255,255,.15)"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="url(#gPearl)"/><ellipse cx="18" cy="16" rx="7" ry="4" fill="rgba(255,255,255,.45)" transform="rotate(-22,18,16)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 36px rgba(242,237,228,.7))"><circle cx="80" cy="80" r="68" fill="url(#gPearl)"/><ellipse cx="54" cy="48" rx="22" ry="12" fill="rgba(255,255,255,.5)" transform="rotate(-22,54,48)"/></svg>`,
+    glow:"rgba(212,175,106,.18)", bg:"radial-gradient(ellipse at 50% 40%,#1e1a10 0%,#07100f 100%)"
+  },
+  sapphire: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(68,136,238,.75))"><polygon points="60,10 106,42 106,78 60,110 14,78 14,42" fill="url(#gSapphire)"/><polygon points="60,10 106,42 60,52" fill="rgba(192,216,255,.55)"/><polygon points="60,10 14,42 60,52" fill="rgba(255,255,255,.22)"/><line x1="60" y1="10" x2="60" y2="110" stroke="rgba(255,255,255,.08)" stroke-width="0.8"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><polygon points="26,4 46,18 46,34 26,48 6,34 6,18" fill="url(#gSapphire)"/><polygon points="26,4 46,18 26,23" fill="rgba(192,216,255,.5)"/><polygon points="26,4 6,18 26,23" fill="rgba(255,255,255,.18)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 40px rgba(68,136,238,.8))"><polygon points="80,10 146,52 146,108 80,150 14,108 14,52" fill="url(#gSapphire)"/><polygon points="80,10 146,52 80,68" fill="rgba(192,216,255,.55)"/><polygon points="80,10 14,52 80,68" fill="rgba(255,255,255,.22)"/></svg>`,
+    glow:"rgba(68,136,238,.2)", bg:"radial-gradient(ellipse at 50% 40%,#0d1530 0%,#07100f 100%)"
+  },
+  ruby: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(238,34,68,.65))"><polygon points="60,8 104,44 88,112 32,112 16,44" fill="url(#gRuby)"/><polygon points="60,8 104,44 60,52" fill="rgba(255,176,192,.6)"/><polygon points="60,8 16,44 60,52" fill="rgba(255,255,255,.22)"/><line x1="60" y1="52" x2="60" y2="112" stroke="rgba(255,255,255,.06)" stroke-width="0.8"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><polygon points="26,4 46,20 38,48 14,48 6,20" fill="url(#gRuby)"/><polygon points="26,4 46,20 26,24" fill="rgba(255,176,192,.55)"/><polygon points="26,4 6,20 26,24" fill="rgba(255,255,255,.18)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 40px rgba(238,34,68,.7))"><polygon points="80,10 140,60 116,150 44,150 20,60" fill="url(#gRuby)"/><polygon points="80,10 140,60 80,70" fill="rgba(255,176,192,.6)"/><polygon points="80,10 20,60 80,70" fill="rgba(255,255,255,.22)"/></svg>`,
+    glow:"rgba(238,34,68,.2)", bg:"radial-gradient(ellipse at 50% 40%,#200a10 0%,#07100f 100%)"
+  },
+  emerald: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(34,187,102,.65))"><rect x="18" y="16" width="84" height="88" rx="10" fill="url(#gEmerald)"/><rect x="18" y="16" width="42" height="44" rx="5" fill="rgba(160,255,204,.3)"/><line x1="18" y1="60" x2="102" y2="60" stroke="rgba(255,255,255,.09)" stroke-width="0.8"/><line x1="60" y1="16" x2="60" y2="104" stroke="rgba(255,255,255,.09)" stroke-width="0.8"/><rect x="18" y="16" width="84" height="88" rx="10" fill="none" stroke="rgba(160,255,204,.25)" stroke-width="1.5"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><rect x="6" y="6" width="40" height="40" rx="5" fill="url(#gEmerald)"/><rect x="6" y="6" width="20" height="20" rx="3" fill="rgba(160,255,204,.3)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 40px rgba(34,187,102,.7))"><rect x="20" y="18" width="120" height="124" rx="14" fill="url(#gEmerald)"/><rect x="20" y="18" width="60" height="62" rx="7" fill="rgba(160,255,204,.3)"/><line x1="20" y1="80" x2="140" y2="80" stroke="rgba(255,255,255,.09)" stroke-width="1"/><line x1="80" y1="18" x2="80" y2="142" stroke="rgba(255,255,255,.09)" stroke-width="1"/><rect x="20" y="18" width="120" height="124" rx="14" fill="none" stroke="rgba(160,255,204,.25)" stroke-width="2"/></svg>`,
+    glow:"rgba(34,187,102,.18)", bg:"radial-gradient(ellipse at 50% 40%,#0a2015 0%,#07100f 100%)"
+  },
+  tanzanite: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(136,68,221,.75))"><polygon points="60,8 108,40 108,80 60,112 12,80 12,40" fill="url(#gTanzanite)"/><polygon points="60,8 108,40 60,52" fill="rgba(224,184,255,.55)"/><polygon points="60,8 12,40 60,52" fill="rgba(255,255,255,.2)"/><polygon points="60,52 108,40 108,80 60,112" fill="rgba(16,4,48,.28)"/><polygon points="60,52 12,40 12,80 60,112" fill="rgba(255,255,255,.07)"/><line x1="60" y1="8" x2="60" y2="52" stroke="rgba(255,255,255,.14)" stroke-width="0.8"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><polygon points="26,4 48,18 48,34 26,48 4,34 4,18" fill="url(#gTanzanite)"/><polygon points="26,4 48,18 26,24" fill="rgba(224,184,255,.5)"/><polygon points="26,4 4,18 26,24" fill="rgba(255,255,255,.18)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 42px rgba(136,68,221,.8))"><polygon points="80,8 148,50 148,110 80,152 12,110 12,50" fill="url(#gTanzanite)"/><polygon points="80,8 148,50 80,68" fill="rgba(224,184,255,.55)"/><polygon points="80,8 12,50 80,68" fill="rgba(255,255,255,.2)"/></svg>`,
+    glow:"rgba(136,68,221,.22)", bg:"radial-gradient(ellipse at 50% 40%,#150828 0%,#07100f 100%)"
+  },
+  alexandrite: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(34,204,136,.7))"><ellipse cx="60" cy="60" rx="54" ry="50" fill="url(#gAlexGreen)"/><ellipse cx="76" cy="72" rx="36" ry="30" fill="url(#gAlexRed)" opacity="0.52"/><ellipse cx="40" cy="36" rx="18" ry="11" fill="rgba(170,255,221,.4)" transform="rotate(-18,40,36)"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><ellipse cx="26" cy="26" rx="24" ry="22" fill="url(#gAlexGreen)"/><ellipse cx="32" cy="32" rx="16" ry="13" fill="url(#gAlexRed)" opacity="0.5"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 42px rgba(34,204,136,.75))"><ellipse cx="80" cy="80" rx="74" ry="68" fill="url(#gAlexGreen)"/><ellipse cx="100" cy="98" rx="50" ry="42" fill="url(#gAlexRed)" opacity="0.52"/><ellipse cx="54" cy="46" rx="26" ry="16" fill="rgba(170,255,221,.4)" transform="rotate(-18,54,46)"/></svg>`,
+    glow:"rgba(34,204,136,.2)", bg:"radial-gradient(ellipse at 50% 40%,#082818 0%,#07100f 100%)"
+  },
+  opal: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 28px rgba(255,136,51,.6))"><ellipse cx="60" cy="60" rx="56" ry="50" fill="url(#gOpal)"/><ellipse cx="42" cy="40" rx="20" ry="13" fill="rgba(255,255,220,.35)" transform="rotate(-15,42,40)"/><ellipse cx="74" cy="74" rx="14" ry="9" fill="rgba(51,221,204,.28)"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><ellipse cx="26" cy="26" rx="24" ry="22" fill="url(#gOpal)"/><ellipse cx="18" cy="17" rx="9" ry="6" fill="rgba(255,255,200,.3)" transform="rotate(-15,18,17)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 42px rgba(255,136,51,.65))"><ellipse cx="80" cy="80" rx="76" ry="68" fill="url(#gOpal)"/><ellipse cx="56" cy="50" rx="28" ry="18" fill="rgba(255,255,220,.35)" transform="rotate(-15,56,50)"/><ellipse cx="100" cy="100" rx="20" ry="13" fill="rgba(51,221,204,.28)"/></svg>`,
+    glow:"rgba(255,136,51,.2)", bg:"radial-gradient(ellipse at 50% 40%,#201008 0%,#07100f 100%)"
+  },
+  paraiba: {
+    big: `<svg width="120" height="120" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 32px rgba(0,238,238,.8))"><polygon points="60,9 106,44 88,111 32,111 14,44" fill="url(#gParaiba)"/><polygon points="60,9 106,44 60,54" fill="rgba(187,255,250,.58)"/><polygon points="60,9 14,44 60,54" fill="rgba(255,255,255,.25)"/><ellipse cx="60" cy="65" rx="20" ry="14" fill="rgba(0,255,240,.1)"/></svg>`,
+    sm:  `<svg width="52" height="52" viewBox="0 0 52 52"><polygon points="26,4 46,20 38,48 14,48 6,20" fill="url(#gParaiba)"/><polygon points="26,4 46,20 26,24" fill="rgba(187,255,250,.55)"/><polygon points="26,4 6,20 26,24" fill="rgba(255,255,255,.22)"/></svg>`,
+    pop: `<svg width="160" height="160" viewBox="0 0 160 160" style="filter:drop-shadow(0 0 50px rgba(0,238,238,.85))"><polygon points="80,10 142,58 118,150 42,150 18,58" fill="url(#gParaiba)"/><polygon points="80,10 142,58 80,72" fill="rgba(187,255,250,.58)"/><polygon points="80,10 18,58 80,72" fill="rgba(255,255,255,.25)"/><ellipse cx="80" cy="100" rx="28" ry="20" fill="rgba(0,255,240,.1)"/></svg>`,
+    glow:"rgba(0,238,238,.22)", bg:"radial-gradient(ellipse at 50% 40%,#001818 0%,#07100f 100%)"
+  }
+};
+
+// ── PRODUCT DATA ──
+const PRODUCTS = [
+  { id:1, gemKey:'pearl',      name:'Lumière Pendant',    metal:'South Sea Pearl · 18k Gold',         price:1280,  badge:'Bestseller',
+    desc:'A luminous South Sea pearl cradled in hand-hammered 18k gold prongs. Each pearl is chosen for its mirror-like luster and overtone perfection.',
+    specs:[['Stone','South Sea Pearl'],['Setting','18k Yellow Gold'],['Pearl Size','11–12mm'],['Finish','High Polish'],['Type','Pendant']] },
+  { id:2, gemKey:'sapphire',   name:'Celeste Ring',       metal:'Ceylon Sapphire · Platinum 950',     price:3450,  badge:'New',
+    desc:'A cushion-cut Ceylon sapphire of intense cornflower blue, held by six platinum claws, shoulders set with micro-pavé white diamonds.',
+    specs:[['Stone','Ceylon Sapphire 4.2ct'],['Setting','Platinum 950'],['Side Stones','Diamond Pavé'],['Cut','Cushion'],['Type','Ring']] },
+  { id:3, gemKey:'ruby',       name:'Rubis Bangle',       metal:'Burmese Ruby · Rose Gold 18k',       price:5890,  badge:'Rare',
+    desc:'Three pigeon-blood Burmese rubies set flush into a solid 18k rose gold bangle. Unheated, certified, and accompanied by a GIA report.',
+    specs:[['Stone','Burmese Ruby 3×1.8ct'],['Setting','18k Rose Gold'],['Treatment','Unheated'],['Certificate','GIA'],['Type','Bangle']] },
+  { id:4, gemKey:'emerald',    name:'Esmeralda Earrings', metal:'Colombian Emerald · 22k Gold',       price:4120,  badge:'Limited',
+    desc:'Emerald-cut Colombian emeralds of vivid forest green, bezel-set in granulated 22k gold — a nod to ancient Indian craftsmanship.',
+    specs:[['Stone','Colombian Emerald 2×2.4ct'],['Setting','22k Yellow Gold'],['Treatment','Minor Oil'],['Origin','Colombia'],['Type','Earrings']] },
+  { id:5, gemKey:'tanzanite',  name:'Tanzanite Crown',    metal:'Tanzanite · White Gold 18k',         price:6750,  badge:'Exclusive',
+    desc:'Rare AAA-grade tanzanite displaying its trichroic shift — violet to blue to burgundy. Set in a sculptural 18k white gold crown mount with baguette diamond halo.',
+    specs:[['Stone','Tanzanite 5.8ct AAA'],['Setting','18k White Gold'],['Halo','Baguette Diamonds'],['Origin','Tanzania'],['Type','Ring']] },
+  { id:6, gemKey:'alexandrite',name:'Alexandrite Locket', metal:'Alexandrite · Platinum & Rose Gold', price:9200,  badge:'Ultra Rare',
+    desc:'Natural alexandrite transitions from teal-green in daylight to raspberry red under candlelight. Set in a bi-metal platinum and rose gold locket.',
+    specs:[['Stone','Natural Alexandrite 2.1ct'],['Setting','Platinum + 18k Rose Gold'],['Colour Change','Green → Red'],['Certificate','GRS'],['Type','Locket']] },
+  { id:7, gemKey:'opal',       name:'Opal Nebula Cuff',   metal:'Ethiopian Opal · Sterling Silver',   price:2840,  badge:'Artisan',
+    desc:'Ethiopian crystal opal ablaze with rolling flashes of orange, teal, and violet — bezel-set in oxidised sterling silver with celestial hand-engraved motifs.',
+    specs:[['Stone','Ethiopian Crystal Opal 8.5ct'],['Setting','Sterling Silver 925'],['Finish','Oxidised'],['Play of Colour','Full Spectrum'],['Type','Cuff']] },
+  { id:8, gemKey:'paraiba',    name:'Paraíba Rivière',    metal:'Paraíba Tourmaline · 22k Gold',      price:14500, badge:'Collector',
+    desc:'Seven neon-electric Paraíba tourmalines from Brazil — their copper-driven glow radiates like living light. Channel-set in a continuous 22k gold rivière necklace.',
+    specs:[['Stone','Paraíba Tourmaline 7×0.9ct'],['Setting','22k Yellow Gold'],['Origin','Brazil'],['Certificate','GIA'],['Type','Necklace']] }
+];
+
+// ── RENDER PRODUCT CARDS ──
+const grid = document.getElementById('productsGrid');
+PRODUCTS.forEach(p => {
+  const g = GEMS[p.gemKey];
+  const card = document.createElement('div');
+  card.className = 'product-card reveal';
+  card.innerHTML = `
+    <div class="product-img" style="background:${g.bg}">
+      <div class="product-glow" style="background:radial-gradient(circle,${g.glow} 0%,transparent 70%)"></div>
+      <div class="gem-ring-outer"></div>
+      <div class="gem-ring-inner"></div>
+      <div class="product-gem-wrap">${g.big}</div>
+    </div>
+    ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+    <div class="product-info">
+      <h4 class="product-name">${p.name}</h4>
+      <p class="product-metal-tag">${p.metal}</p>
+      <div class="product-footer">
+        <span class="product-price">$${p.price.toLocaleString()}</span>
+        <button class="add-btn" data-id="${p.id}">+ Bag</button>
+      </div>
+    </div>`;
+  card.addEventListener('click', e => { if(!e.target.classList.contains('add-btn')) openPopup(p); });
+  grid.appendChild(card);
+});
+
+// ── CART ──
+let cart = [];
+function updateBadge(){
+  const b=document.getElementById('cartBadge');
+  b.textContent=cart.length; b.classList.toggle('show',cart.length>0);
+  document.getElementById('cartTotal').textContent='$'+cart.reduce((s,i)=>s+i.price,0).toLocaleString();
+}
+function renderCart(){
+  const el=document.getElementById('cartItemsEl');
+  if(!cart.length){ el.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">◇</div><p>Your bag is empty.<br>Discover something beautiful.</p></div>`; return; }
+  el.innerHTML=cart.map((item,i)=>`
+    <div class="cart-item">
+      <div class="cart-item-gem">${GEMS[item.gemKey].sm}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-sub">${item.metal}</div>
+        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+      </div>
+      <button class="cart-item-remove" data-idx="${i}">✕</button>
+    </div>`).join('');
+  el.querySelectorAll('.cart-item-remove').forEach(btn=>{
+    btn.addEventListener('click',()=>{ cart.splice(+btn.dataset.idx,1); renderCart(); updateBadge(); });
+  });
+}
+function addToCart(p){ cart.push(p); renderCart(); updateBadge(); showToast(`${p.name} added to bag`); }
+
+const cartOverlay=document.getElementById('cartOverlay');
+const cartDrawer=document.getElementById('cartDrawer');
+document.getElementById('cartToggle').addEventListener('click',()=>{ cartOverlay.classList.add('open'); cartDrawer.classList.add('open'); });
+document.getElementById('cartClose').addEventListener('click',()=>{ cartOverlay.classList.remove('open'); cartDrawer.classList.remove('open'); });
+cartOverlay.addEventListener('click',()=>{ cartOverlay.classList.remove('open'); cartDrawer.classList.remove('open'); });
+
+grid.addEventListener('click',e=>{
+  if(e.target.classList.contains('add-btn')){
+    const p=PRODUCTS.find(x=>x.id===+e.target.dataset.id); if(p) addToCart(p);
+  }
+});
+
+// ── POPUP ──
+function openPopup(p){
+  const g=GEMS[p.gemKey];
+  document.getElementById('popupGemBg').style.background=g.bg;
+  document.getElementById('popupGemWrap').innerHTML=g.pop;
+  document.getElementById('popupInfo').innerHTML=`
+    <p class="popup-badge">${p.badge||''}</p>
+    <h2 class="popup-name">${p.name}</h2>
+    <p class="popup-metal">${p.metal}</p>
+    <p class="popup-price">$${p.price.toLocaleString()}</p>
+    <p class="popup-desc">${p.desc}</p>
+    <ul class="popup-specs">${p.specs.map(s=>`<li><span>${s[0]}</span><span>${s[1]}</span></li>`).join('')}</ul>
+    <button class="popup-add-btn" id="popupAddBtn">Add to Bag</button>`;
+  document.getElementById('popupAddBtn').addEventListener('click',()=>{ addToCart(p); closePopup(); });
+  document.getElementById('popupOverlay').classList.add('open');
+}
+function closePopup(){ document.getElementById('popupOverlay').classList.remove('open'); }
+document.getElementById('popupClose').addEventListener('click',closePopup);
+document.getElementById('popupOverlay').addEventListener('click',e=>{ if(e.target===document.getElementById('popupOverlay')) closePopup(); });
+
+// ── TOAST ──
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+
+// ── PARTICLES ──
+const pc=document.getElementById('particles');
+['#4ECDC4','#D4AF6A','#C8D8D6','#F2EDE4','#A8E6CE'].forEach((c,ci)=>{
+  for(let i=0;i<6;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const sz=Math.random()*3+1;
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${30+Math.random()*55}%;background:${c};--dur:${4+Math.random()*6}s;--delay:${Math.random()*8}s;`;
+    pc.appendChild(p);
+  }
+});
+
+// ── MARQUEE ──
+const stones=['Pearls','Sapphires','Emeralds','Rubies','Tanzanite','Alexandrite','Ethiopian Opal','Paraíba','Tourmaline','Amethyst','Aquamarine','Topaz'];
+const track=document.getElementById('marqueeTrack');
+[...stones,...stones].forEach(s=>{ const d=document.createElement('div'); d.className='marquee-item'; d.innerHTML=`<span class="marquee-dot"></span>${s}`; track.appendChild(d); });
+
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); } });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>{ document.getElementById('mainNav').style.background=window.scrollY>60?'rgba(7,16,15,.98)':'rgba(7,16,15,.96)'; });
+
+renderCart(); updateBadge();
+</script>
+</body>
+</html>
