@@ -1,3 +1,181 @@
+## 📌 Project Overview
+
+Lumine Jewelry Store is a fully automated DevOps project where a static e-commerce website is deployed on AWS using a CI/CD pipeline.
+
+Every code change pushed to GitHub automatically triggers deployment to AWS S3 and invalidates CloudFront cache, ensuring real-time updates with zero manual intervention.
+
+
+---
+
+🏗️ Architecture
+
+`Developer
+   ↓
+GitHub Repository
+   ↓
+GitHub Actions (CI/CD)
+   ↓
+AWS S3 Bucket
+   ↓
+CloudFront CDN
+   ↓
+End Users (Global Access)`
+
+
+---
+
+⚙️ Tech Stack
+
+🧑‍💻 Git & GitHub (Version Control)
+
+⚡ GitHub Actions (CI/CD Automation)
+
+☁️ AWS S3 (Static Hosting)
+
+🌍 AWS CloudFront (CDN)
+
+🔐 IAM (Security & Access Management)
+
+🌐 HTML, CSS, JavaScript (Frontend)
+
+
+
+---
+
+🚀 Features
+
+🔄 Fully automated CI/CD pipeline
+
+🚫 No manual deployment required
+
+⚡ Fast global content delivery via CloudFront
+
+♻️ Automatic cache invalidation on updates
+
+🔐 Secure AWS IAM-based deployment
+
+📦 Production-like DevOps workflow
+
+
+
+---
+
+🔄 CI/CD Workflow
+
+1. Developer pushes code to GitHub
+2. GitHub Actions pipeline is triggered
+3. Files are synced to AWS S3 bucket
+4. CloudFront cache is invalidated
+5. Updated website goes live instantly
+
+
+---
+
+📁 Project Structure
+
+`Lumine-Jewelry-Store/
+│
+├── index.html
+│
+└── .github/
+    └── workflows/
+        └── deploy.yml`
+
+
+---
+
+⚙️ GitHub Actions Pipeline
+
+The pipeline automatically:
+
+Checks out repository code
+
+Configures AWS credentials securely
+
+Syncs files to S3 bucket
+
+Invalidates CloudFront cache
+
+
+
+---
+
+🧠 Key Learnings
+
+CI/CD pipeline automation using GitHub Actions
+
+AWS S3 static hosting setup
+
+CloudFront CDN integration
+
+IAM security best practices
+
+Real-world DevOps deployment workflow
+
+
+
+---
+
+📊 Project Outcome
+
+✔️ Fully automated deployment system
+✔️ Zero downtime updates
+✔️ Global CDN-based website delivery
+✔️ Production-ready DevOps architecture
+
+
+---
+
+💼 Use Case
+
+This project demonstrates real-world DevOps skills including:
+
+Cloud automation
+
+CI/CD implementation
+
+Infrastructure integration
+
+Scalable static website deployment
+
+
+
+---
+
+📸 (Optional Add-ons)
+
+Website homepage + CloudFront URL output
+<img width="1366" height="670" alt="1" src="https://github.com/user-attachments/assets/df67880c-0ef7-44f8-8702-2ddf1fb1a730" />
+
+GitHub Actions success pipeline
+
+
+
+
+
+---
+
+🏁 Final Status
+
+🚀 Project Successfully Deployed & Automated
+
+
+---
+
+👨‍💻 Author
+
+Anees Fatima
+junior DevOps Engg | Cloud Enthusiast | AWS Learner
+
+
+---
+
+⭐ If you like this project
+
+Give it a ⭐ on GitHub and feel free to fork it!
+
+
+---
 # lumine-jewelry-store
 Phase 1 (Lab 1)
 
