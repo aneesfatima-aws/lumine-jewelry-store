@@ -1,0 +1,150 @@
+
+## 🚀 DevOps Portfolio Project: Lumine Jewelry Store
+
+📌 Project Title
+
+Lumine Jewelry Store – CI/CD Automated Cloud Deployment on AWS
+
+
+---
+
+🧠 Project Overview (Portfolio Description)
+
+A fully automated DevOps pipeline was built for a static e-commerce website (Lumine Jewelry Store) using GitHub Actions and AWS services. The project implements continuous integration and continuous deployment (CI/CD) to ensure every code change is automatically deployed to production with zero manual intervention.
+
+The application is hosted on AWS S3 and delivered globally using CloudFront CDN with cache invalidation for instant updates.
+
+
+---
+
+🏗️ Architecture
+
+Developer → GitHub → GitHub Actions → AWS S3 → CloudFront → End Users
+
+
+---
+
+⚙️ Tech Stack
+
+Version Control: Git & GitHub
+
+CI/CD: GitHub Actions
+
+Cloud Provider: AWS
+
+Storage: Amazon S3
+
+CDN: Amazon CloudFront
+
+Infrastructure: IAM, S3 policies, CloudFront invalidation
+
+Frontend: HTML, CSS, JavaScript (Static Website)
+
+
+
+---
+
+🚀 Key Features
+
+✔️ Fully automated CI/CD pipeline
+✔️ Zero manual deployment
+✔️ CloudFront CDN for fast global delivery
+✔️ Automatic cache invalidation on updates
+✔️ Secure S3 integration via IAM roles
+✔️ Production-ready DevOps workflow
+
+
+---
+
+🔄 CI/CD Workflow
+
+1. Developer pushes code to GitHub
+2. GitHub Actions triggers pipeline
+3. Code is synced to S3 bucket
+4. CloudFront cache is invalidated
+5. Updated website is live instantly
+
+
+---
+
+📦 GitHub Actions Pipeline
+
+Workflow automates:
+
+Code checkout
+
+AWS credentials configuration
+
+S3 sync
+
+CloudFront invalidation
+
+
+
+---
+
+🧾 Sample Workflow Summary
+
+Trigger: git push on main branch
+
+Action runner: Ubuntu
+
+Deployment: AWS CLI
+
+Final step: CloudFront refresh
+
+
+
+---
+
+📊 DevOps Skills Demonstrated
+
+CI/CD automation
+
+Cloud infrastructure management (AWS)
+
+CDN configuration (CloudFront)
+
+Secure IAM usage
+
+Git-based workflow
+
+Infrastructure-as-code mindset (basic level)
+
+
+
+---
+
+🧠 What makes this project “portfolio-level”
+
+Instead of manual hosting:
+
+❌ Upload files manually to S3
+✔️ Fully automated deployment pipeline
+
+Instead of slow updates:
+
+❌ Cache issues
+✔️ Instant CloudFront invalidation
+
+Instead of local hosting:
+
+❌ Local machine dependency
+✔️ Cloud-based scalable deployment
+
+
+---
+
+🏁 Final Outcome
+
+Website deployed on AWS cloud
+
+Fully automated CI/CD pipeline
+
+Production-like architecture implemented
+
+Ready for real-world DevOps demonstration
+
+
+
+---
