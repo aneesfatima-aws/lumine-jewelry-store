@@ -1,3 +1,5 @@
+<img width="1536" height="1024" alt="WhatsApp Image 2026-06-21 at 1 15 55 AM" src="https://github.com/user-attachments/assets/16b338a2-84b4-473a-a163-d79e645e64e6" />
+
 ## 📌 Project Overview
 
 Lumine Jewelry Store is a fully automated DevOps project where a static e-commerce website is deployed on AWS using a CI/CD pipeline.
